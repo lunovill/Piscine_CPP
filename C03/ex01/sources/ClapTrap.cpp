@@ -6,8 +6,8 @@
 
 ClapTrap::ClapTrap(void) {return;}
 
-ClapTrap::ClapTrap(std::string name) : _name(name), _hitPoint(10), _energyPoint(10), _attackDamage(0) {
-	std::cout << ansi((short[]){BOLD, ITALIC, GREEN}, 3) + "ClapTrap constructor called." << std::endl;
+ClapTrap::ClapTrap(std::string name) : _name(name), _hitPoint(100), _energyPoint(50), _attackDamage(20) {
+	std::cout << ansi((short[]){BOLD, ITALIC, GREEN}, 3) + "ClapTrap constructor called for " + name + "." << std::endl;
 	return;
 }
 

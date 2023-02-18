@@ -1,103 +1,156 @@
 #include <cstdlib>
 #include <ctime>
-//#include <string>
-//#include <iomanip>
+#include <iomanip>
 #include "ClapTrap.hpp"
 
-unsigned int    randomDamage(void) {
+# define HP_SIZE 10
+# define EP_SIZE 10
+
+unsigned int    randomDamage(bool b) {
 	srand(time(NULL));
 	int random = rand() % 100;
 	if (random < 10)
-		return 0;
-	else if (random < 50)
+		return b ? 1 : 0;
+	else if (random < 45)
 		return 1;
+	else if (random < 70)
+		return b ? 1 : 2;
 	else if (random < 90)
-		return 2;
+		return b ? 2 : 3;
 	else
-		return 3;    
+		return b ? 3 : 5;    
 }
 
 int	clash(ClapTrap &attacker, ClapTrap &defender) {
-	unsigned int	amount = randomDamage();
 
 	if (attacker.getHitPoint() < 3) {
-			attack.beRepaired(amount);
+		unsigned int	amount = randomDamage(1);
+		unsigned int	tmp = (!attacker.getEnergyPoint() || !attacker.getHitPoint()) ? 0 : amount;
+		attacker.beRepaired(amount);
+		if (!tmp)
+			std::cout << ansi(NULL, 0) + attacker.getName() << ansi((short[]){PURPLE, ITALIC}, 2) + " was not able to heal himself." << std::endl;
+		else
 			std::cout << std::endl;
-			std::cout << std::endl;
-			return (attacker.getEnergyPoint() == 0) ? 0 : amount;
+		std::cout << std::endl;
+		return tmp;
 	} else {
+		unsigned int	amount = randomDamage(0);
+		unsigned int	tmp = (attacker.getEnergyPoint() == 0 || !attacker.getHitPoint()) ? 0 : -amount;
 		attacker.setAttackDamage(amount);
 		attacker.attack(defender.getName());
 		defender.takeDamage(amount);
 		if (!amount)
-			std::cout << ansi(NULL, 0) + defender.getName() << ansi((short[]){BLUE, ITALIC}, 2) + "dodges the attack !" << std::endl;
-		else if (amount == 3)
-			std::cout << ansi((short[]){BLUE, ITALIC}, 2) + "It's a critical hit !" << std::endl;
+			std::cout << ansi(NULL, 0) + defender.getName() << ansi((short[]){PURPLE, ITALIC}, 2) + " dodges the attack !" << std::endl;
+		else if (amount == 5)
+			std::cout << ansi((short[]){PURPLE, ITALIC}, 2) + "It's a critical hit !" << std::endl;
 		else
 			std::cout << std::endl;
-		return (attacker.getEnergyPoint() == 0) ? 0 : -amount;
+		return tmp;
 	}
 }
 
-void	printClash(ClapTrap &Judokrak, ClapTrap &Karaclee) {
+void	printClash(ClapTrap &Judokrak, ClapTrap &Karaclee, unsigned int i) {
+	// Versus case
 	std::cout << ansi((short[]){BOLD}, 1);
-	std::cout << "______________________________" << std::endl;
-	std::cout << "=====  " + Judokrak.getName() + "  VS  " + Karaclee.getName() + "  =====" << std::endl;
-	std::cout << "______________________________" << std::endl;
-	std::cout << ansi((short[]]){HIGHLIGHT}, 1) << std::left << std::setw(10) << std::string(' ', Judokrak.getHitPoint());
-	std::cout << ansi(NULL, 0) << std::internal << std::setw(10) << i;
-	std::cout << ansi((short[]]){HIGHLIGHT}, 1) << std::right << std::setw(10) << std::string(' ', Karaclee.getHitPoint());
+	std::cout << std::string(HP_SIZE * 3, '_') << std::endl;
+	std::cout << std::string(HP_SIZE * 3, ' ') << std::endl;
+	size_t	size = HP_SIZE + HP_SIZE / 2 - Judokrak.getName().length() - 3;
+	std::cout << std::left << std::setw(size) << std::string(size - 1, '=');
+	std::cout << Judokrak.getName() + "  VS  " + Karaclee.getName();
+	size = HP_SIZE + HP_SIZE / 2 - Karaclee.getName().length() - 3;
+	std::cout << std::right << std::setw(size) << std::string(size - 1, '=') << std::endl;
+	std::cout << std::string(HP_SIZE * 3, '_') << std::endl;
+
+	// Hit Point Bar
+	std::cout << ((Judokrak.getHitPoint() <= HP_SIZE / 4) ? ansi((short[]){HIGHLIGHT, RED}, 2) : (Judokrak.getHitPoint() <= HP_SIZE / 2) ? ansi((short[]){HIGHLIGHT, YELLOW}, 2) : ansi((short[]){HIGHLIGHT, GREEN}, 2));
+	std::cout << std::string(Judokrak.getHitPoint(), ' ');
+	std::cout << ansi(NULL, 0) << std::string(HP_SIZE - Judokrak.getHitPoint(), ' ');
+	std::cout << ansi(NULL, 0) << std::right << std::setw(HP_SIZE / 2) << 'R' << i << std::string(HP_SIZE / 2 - 1, ' ');
+	std::cout << ansi(NULL, 0) << std::string(HP_SIZE - Karaclee.getHitPoint(), ' ');
+	std::cout << ((Karaclee.getHitPoint() <= HP_SIZE / 4) ? ansi((short[]){HIGHLIGHT, RED}, 2) : (Karaclee.getHitPoint() <= HP_SIZE / 2) ? ansi((short[]){HIGHLIGHT, YELLOW}, 2) : ansi((short[]){HIGHLIGHT, GREEN}, 2));
+	std::cout  << std::string(Karaclee.getHitPoint(), ' ') << std::endl;
+
+	// Stats
 	std::cout << ansi((short[]){BOLD}, 1) << "HP";
-	std::cout << (Judokrak.getHitPoint() <= 3) ? ansi((short[]]){RED}, 1) : (Judokrak.getHitPoint() <= 5) ? ansi((short[]]){YELLOW}, 1) : ansi((short[]]){GREEN}, 1);
-	std::cout << std::right << std::setw(8) << Judokrak.getHitPoint();
-	std::cout << std::string(' ', 10);
+	std::cout << ((Judokrak.getHitPoint() <= HP_SIZE / 4) ? ansi((short[]){RED}, 1) : (Judokrak.getHitPoint() <= HP_SIZE / 2) ? ansi((short[]){YELLOW}, 1) : ansi((short[]){GREEN}, 1));
+	std::cout << std::right << std::setw(HP_SIZE - 2) << Judokrak.getHitPoint();
+	std::cout << std::string(HP_SIZE, ' ');
 	std::cout << ansi((short[]){BOLD}, 1) << "HP";
-	std::cout << (Karaclee.getHitPoint() <= 3) ? ansi((short[]]){RED}, 1) : (Karaclee.getHitPoint() <= 5) ? ansi((short[]]){YELLOW}, 1) : ansi((short[]]){GREEN}, 1);
-	std::cout << std::right << std::setw(8) << Karaclee.getHitPoint();
+	std::cout << ((Karaclee.getHitPoint() <= HP_SIZE / 4) ? ansi((short[]){RED}, 1) : (Karaclee.getHitPoint() <= HP_SIZE / 2) ? ansi((short[]){YELLOW}, 1) : ansi((short[]){GREEN}, 1));
+	std::cout << std::right << std::setw(HP_SIZE - 2) << Karaclee.getHitPoint() << std::endl;
 	std::cout << ansi((short[]){BOLD}, 1) << "EP";
-	std::cout << (Judokrak.getEnergyPoint() <= 3) ? ansi((short[]]){CYAN}, 1) : ansi((short[]]){BLUE}, 1);
-	std::cout << std::right << std::setw(8) << Judokrak.getEnergyPoint();
-	std::cout << std::string(' ', 10);
+	std::cout << ((Judokrak.getEnergyPoint() <= EP_SIZE / 4) ? ansi((short[]){PURPLE}, 1) : ansi((short[]){CYAN}, 1));
+	std::cout << std::right << std::setw(HP_SIZE - 2) << Judokrak.getEnergyPoint();
+	std::cout << std::string(HP_SIZE, ' ');
 	std::cout << ansi((short[]){BOLD}, 1) << "EP";
-	std::cout << (Karaclee.getEnergyPoint() <= 3) ? ansi((short[]]){CYAN}, 1) : ansi((short[]]){BLUE}, 1);
-	std::cout << std::right << std::setw(8) << Karaclee.getEnergyPoint();
+	std::cout << ((Karaclee.getEnergyPoint() <= EP_SIZE / 4) ? ansi((short[]){PURPLE}, 1) : ansi((short[]){CYAN}, 1));
+	std::cout << std::right << std::setw(HP_SIZE - 2) << Karaclee.getEnergyPoint() << std::endl;
 	std::cout << std::endl;
 	return;
 }
 
 int    main(void) {
+	// Let's Fight
+	std::system("clear");
+	std::cout << ansi((short[]){BOLD}, 1) + std::string(HP_SIZE + HP_SIZE / 2 - 4, '=') + "COMMENTS" + std::string(HP_SIZE + HP_SIZE / 2 - 4, '=') << std::endl;
 	ClapTrap Judokrak("Nageki");
 	ClapTrap Karaclee("Dageki");
+	std::cout << std::endl;
+	std::cout << ansi((short[]){BOLD, GREEN}, 2) << "Let's fight!" << std::endl;
+	printClash(Judokrak, Karaclee, 0);
+	std::cout << ansi(NULL, 0) + std::string(HP_SIZE, '_') + std::string(HP_SIZE, ' ') + std::string(HP_SIZE, '_') << std::endl;
+	std::cout << ansi(NULL, 0) + std::string(HP_SIZE, ' ') + '|' + std::string(HP_SIZE - 2, ' ') + '|' + std::string(HP_SIZE, ' ') << std::endl;
+	std::cout << ansi(NULL, 0) + std::string(HP_SIZE / 2 - 1, ' ') + "--" + std::string(HP_SIZE / 2 - 1, ' ') + '|' + std::string(HP_SIZE - 2, ' ') + '|' + std::string(HP_SIZE / 2 - 1, ' ') + "--" + std::string(HP_SIZE / 2 - 1, ' ') << std::endl;
+	std::cout << ansi(NULL, 0) + std::string(HP_SIZE, '_') + '|' + std::string(HP_SIZE - 2, ' ') + '|' + std::string(HP_SIZE, '_') << std::endl;
+	std::cout << std::endl;
+	std::cout << ansi((short[]){NORMAL, ITALIC}, 2) + "Press ENTER to continue...";
+	std::cin.get();
 
-	for (unsigned int i = 0; Judokrak.getHitPoint() && Karaclee.getHitPoint(); ++i) {
+	for (unsigned int i = 0; Judokrak.getEnergyPoint() && Karaclee.getHitPoint() && Karaclee.getEnergyPoint(); ++i) {
 		std::system("clear");
-		std::cout << ansi((short[]){BOLD}, 1) + "===========COMMENTS===========" << std::endl;
+		std::cout << ansi((short[]){BOLD}, 1) + std::string(HP_SIZE + HP_SIZE / 2 - 4, '=') + "COMMENTS" + std::string(HP_SIZE + HP_SIZE / 2 - 4, '=') << std::endl;
 		int amount = clash(Judokrak, Karaclee);
+		if (!Judokrak.getHitPoint())
+			std::cout << ansi(NULL, 0) + Judokrak.getName() << ansi((short[]){BOLD, BLUE}, 2) +  " is K.O" << std::endl;
+		else
+			std::cout << std::endl;
+		printClash(Judokrak, Karaclee, i);
+	
+		// Attack case
+		std::cout << ansi(NULL, 0) + std::string(HP_SIZE, '_') + std::string(HP_SIZE, ' ') + std::string(HP_SIZE, '_') << std::endl;
+		std::cout << ansi(NULL, 0) + std::string(HP_SIZE, ' ') + '|' + std::string(HP_SIZE - 2, ' ') + '|' + std::string(HP_SIZE, ' ') << std::endl;
+		std::cout << ((amount < 0) ? ansi((short[]){RED}, 1) : (amount == 0) ? ansi(NULL, 0) : ansi((short[]){GREEN}, 1));
+		std::cout << std::string(HP_SIZE / 2 - 1, ' ') << std::showpos << amount << std::string(HP_SIZE / 2 - 1, ' ');
+		std::cout << ansi(NULL, 0) + '|' + std::string(HP_SIZE - 2, ' ') + '|' + std::string(HP_SIZE / 2 - 1, ' ') + "--" + std::string(HP_SIZE / 2 - 1, ' ') << std::endl;
+		std::cout << ansi(NULL, 0) + std::string(HP_SIZE, '_') + '|' + std::string(HP_SIZE - 2, ' ') + '|' + std::string(HP_SIZE, '_') << std::endl;
 		std::cout << std::endl;
-		printClash(Judokrak, Karaclee);
-		std::cout << ansi(NULL, 0) + "__________          __________" << std::endl;
-		std::cout << (amount < 0) ? ansi((short[]){RED}, 1) : (amount == 0) ? ansi(NULL, 0) : ansi((short[]){GREEN}, 1);
-		std::cout << std::internal << std::setw(10) << std::showpos << amount;
-		std::cout << ansi(NULL, 0) + "|        |    --    " << std::endl
-		std::cout << ansi(NULL, 0) + "_________|          |_________" << std::endl;
-		std::cout << std::endl;
-		std::cout << ansi((short[]){NORMAL, ITALIC}, 2) + "Press ENTER to continue...";
-		std::cin.get();
-		std::system("clear");
-		std::cout << ansi((short[]){BOLD}, 1) + "===========COMMENTS===========" << std::endl;
-		int amount = clash(Karaclee, Judokrak);
-		std::cout << std::endl;
-		printClash(Judokrak, Karaclee);
-		std::cout << ansi(NULL, 0) + "__________          __________" << std::endl;
-		std::cout << ansi(NULL, 0) + "    --    |        |";
-		std::cout << (amount < 0) ? ansi((short[]){RED}, 1) : (amount == 0) ? ansi(NULL, 0) : ansi((short[]){GREEN}, 1);
-		std::cout << std::internal << std::setw(10) << std::showpos << amount << std::endl;
-		std::cout << ansi(NULL, 0) + "__________|         |_________" << std::endl;
-		std::cout << std::endl;
-		std::cout << ansi((short[]){NORMAL, ITALIC}, 2) + "Press ENTER to continue...";
-		std::cin.get();
-		// Condition de sortie de la boucle
-	}
 
+		std::cout << ansi((short[]){NORMAL, ITALIC}, 2) + "Press ENTER to continue...";
+		std::cin.get();
+		if (!Judokrak.getHitPoint())
+			break;
+
+		std::system("clear");
+		std::cout << ansi((short[]){BOLD}, 1) + std::string(HP_SIZE + HP_SIZE / 2 - 4, '=') + "COMMENTS" + std::string(HP_SIZE + HP_SIZE / 2 - 4, '=') << std::endl;
+		amount = clash(Karaclee, Judokrak);
+		if (!Karaclee.getHitPoint())
+			std::cout << ansi(NULL, 0) + Karaclee.getName() << ansi((short[]){BOLD, RED}, 2) +  " is K.O." << std::endl;
+		else if (!Judokrak.getEnergyPoint() && !Karaclee.getEnergyPoint())
+			std::cout << ansi((short[]){BOLD, BLUE}, 2) +  "The two ClapTraps are exhausted. Draw!" << std::endl;
+		else
+			std::cout << std::endl;
+		printClash(Judokrak, Karaclee, i);
+
+		// Attack case
+		std::cout << ansi(NULL, 0) + std::string(HP_SIZE, '_') + std::string(HP_SIZE, ' ') + std::string(HP_SIZE, '_') << std::endl;
+		std::cout << ansi(NULL, 0) + std::string(HP_SIZE, ' ') + '|' + std::string(HP_SIZE - 2, ' ') + '|' + std::string(HP_SIZE, ' ') << std::endl;
+		std::cout << ansi(NULL, 0) + std::string(HP_SIZE / 2 - 1, ' ') + "--" + std::string(HP_SIZE / 2 - 1, ' ') + '|' + std::string(HP_SIZE - 2, ' ') + '|';
+		std::cout << ((amount < 0) ? ansi((short[]){RED}, 1) : (amount == 0) ? ansi(NULL, 0) : ansi((short[]){GREEN}, 1));
+		std::cout << std::string(HP_SIZE / 2 - 1, ' ') << std::showpos << amount << std::string(HP_SIZE / 2 - 1, ' ') << std::endl;
+		std::cout << ansi(NULL, 0) + std::string(HP_SIZE, '_') + '|' + std::string(HP_SIZE - 2, ' ') + '|' + std::string(HP_SIZE, '_') << std::endl;
+		std::cout << std::endl;
+		std::cout << ansi((short[]){NORMAL, ITALIC}, 2) + "Press ENTER to continue...";
+		std::cin.get();
+	}
 	return 0;
 }
