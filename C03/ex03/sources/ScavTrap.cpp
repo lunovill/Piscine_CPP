@@ -6,7 +6,7 @@
 
 ScavTrap::ScavTrap(void) {return;}
 
-ScavTrap::ScavTrap(std::string name) : ClapTrap(name) {
+ScavTrap::ScavTrap(std::string name) : ClapTrap(name), _hitPoint(100), _energyPoint(50), _attackDamage(20) {
 	std::cout << ansi((short[]){BOLD, ITALIC, GREEN}, 3) + "ScavTrap constructor called for " << name << "." << std::endl;
 	return;
 }

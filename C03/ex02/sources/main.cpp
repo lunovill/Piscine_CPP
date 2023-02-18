@@ -1,31 +1,25 @@
 #include <cstdlib>
 #include <ctime>
 #include <iomanip>
-#include "ScavTrap.hpp"
+#include "FragTrap.hpp"
 
 # define SIZE 20
 # define HP_SIZE 100
-# define EP_SIZE 50
+# define EP_SIZE 100
 
-static unsigned int    randomNumber(bool b) {
+static bool	randomNumber(void) {
 	srand(time(NULL));
 	int random = rand() % 100;
-	if (random < 10)
-		return b ? 1 : 0;
-	else if (random < 45)
-		return 1;
-	else if (random < 70)
-		return b ? 1 : 2;
-	else if (random < 90)
-		return b ? 2 : 3;
+	if (random < 1)
+		return true;
 	else
-		return b ? 3 : 4;    
+		return false;
 }
 
-static int	clash(ScavTrap &attacker, ScavTrap &defender) {
+static int	clash(FragTrap &attacker, FragTrap &defender) {
 
 	if (attacker.getHitPoint() < 20) {
-		unsigned int	amount = randomNumber(1) * 5 + 25;
+		unsigned int	amount = 60;
 		unsigned int	tmp = (!attacker.getEnergyPoint() || !attacker.getHitPoint()) ? 0 : amount;
 		attacker.beRepaired(amount);
 		if (!tmp)
@@ -38,27 +32,28 @@ static int	clash(ScavTrap &attacker, ScavTrap &defender) {
 	} else {
 		unsigned int	amount = attacker.getAttackDamage();
 		unsigned int	tmp = (attacker.getEnergyPoint() == 0 || !attacker.getHitPoint()) ? 0 : -amount;
-		unsigned int gate = randomNumber(1);
 		attacker.attack(defender.getName());
-		if (gate == 1) {
-			defender.takeDamage(amount);
-			std::cout << ansi((short[]){PURPLE, ITALIC}, 2) + "It's a critical hit !" << std::endl;
-			std::cout << std::endl;
-		} else {
-			attacker.guardGate();
-			amount -= (randomNumber(1) + 1) * 5 ;
-			defender.takeDamage(amount);
-			if (!amount) 
-				std::cout << ansi(NULL, 0) + defender.getName() << ansi((short[]){PURPLE, ITALIC}, 2) + " dodges the attack !" << std::endl;
-			else
+		if (randomNumber()) {
+			attacker.highFivesGuys();
+			if (randomNumber()) {
+				attacker.setAttackDamage(100);
+				std::cout << ansi(NULL, 0) + defender.getName() << ansi((short[]){PURPLE, ITALIC}, 2) + " explodes after accepting, don't trust strangers ^^" << std::endl;
+				defender.takeDamage(100);
+			} else {
+				std::cout << ansi(NULL, 0) + defender.getName() << ansi((short[]){PURPLE, ITALIC}, 2) + " doesn't trust his opponent." << std::endl;
 				std::cout << std::endl;
-			tmp = tmp ? -amount : tmp;
+			}
+		} else {
+			defender.takeDamage(amount);
+			std::cout << std::endl;
+			std::cout << std::endl;
 		}
+		tmp = tmp ? -amount : tmp;
 		return tmp;
 	}
 }
 
-static void	printClash(ScavTrap &robotXV, ScavTrap &robotXK, unsigned int i) {
+static void	printClash(FragTrap &robotXV, FragTrap &robotXK, unsigned int i) {
 	// Versus case
 	std::cout << ansi((short[]){BOLD}, 1);
 	std::cout << std::string(SIZE * 3, '_') << std::endl;
@@ -102,8 +97,8 @@ int    main(void) {
 	// Let's Fight
 	std::system("clear");
 	std::cout << ansi((short[]){BOLD}, 1) + std::string(SIZE + SIZE / 2 - 4, '=') + "COMMENTS" + std::string(SIZE + SIZE / 2 - 4, '=') << std::endl;
-	ScavTrap robotXV("XV01ST");
-	ScavTrap robotXK("XK01ST");
+	FragTrap robotXV("XV01FT");
+	FragTrap robotXK("XK01FT");
 	std::cout << ansi((short[]){BOLD, GREEN}, 2) << "Let's fight!" << std::endl;
 	printClash(robotXV, robotXK, 0);
 	std::cout << ansi(NULL, 0) + std::string(SIZE, '_') + std::string(SIZE, ' ') + std::string(SIZE, '_') << std::endl;
