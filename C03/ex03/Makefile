@@ -40,7 +40,7 @@ CDFLAGS = -MMD -MP
 #									MAKEFILE									#
  #=============================================================================#
 
-NAME = default
+NAME = DiamondTrap
 
 all : $(NAME)
 

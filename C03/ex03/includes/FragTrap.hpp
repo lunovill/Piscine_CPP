@@ -4,7 +4,8 @@
 # include "ClapTrap.hpp"
 
 class FragTrap : virtual public ClapTrap {
-	private:
+
+	protected:
 
 		FragTrap(void);
 

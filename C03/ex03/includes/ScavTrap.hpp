@@ -4,7 +4,8 @@
 # include "ClapTrap.hpp"
 
 class ScavTrap : virtual public ClapTrap {
-	private:
+
+	protected:
 
 		ScavTrap(void);
 

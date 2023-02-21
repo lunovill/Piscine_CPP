@@ -7,12 +7,18 @@
 FragTrap::FragTrap(void) {return;}
 
 FragTrap::FragTrap(std::string name) : ClapTrap(name) {
+	this->_hitPoint = 100;
+	this->_energyPoint = 100;
+	this->_attackDamage = 30;
 	std::cout << ansi((short[]){BOLD, ITALIC, GREEN}, 3) + "FragTrap constructor called for " << name << "." << std::endl;
 	return;
 }
 
-FragTrap::FragTrap(const FragTrap &copy) : ClapTrap(copy) {
-	std::cout << ansi((short[]){BOLD, ITALIC, GREEN}, 3) + "FragTrap copy constructor called" << std::endl;
+FragTrap::FragTrap(const FragTrap &copy) : ClapTrap(copy.getName()) {
+	this->_hitPoint = copy.getHitPoint();
+	this->_energyPoint = copy.getEnergyPoint();
+	this->_attackDamage = copy.getAttackDamage();
+	std::cout << ansi((short[]){BOLD, ITALIC, GREEN}, 3) + "FragTrap copy constructor called." << std::endl;
 	return;
 }
 
@@ -21,7 +27,7 @@ FragTrap::FragTrap(const FragTrap &copy) : ClapTrap(copy) {
 /********************************************************************************/
 
 FragTrap::~FragTrap() {
-	std::cout << ansi((short[]){BOLD, ITALIC, RED}, 3) + "FragTrap destructor called" << std::endl;
+	std::cout << ansi((short[]){BOLD, ITALIC, RED}, 3) + "FragTrap destructor called for " << this->_name << "." << std::endl;
 	return;
 }
 

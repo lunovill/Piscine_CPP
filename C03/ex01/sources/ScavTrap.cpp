@@ -7,12 +7,18 @@
 ScavTrap::ScavTrap(void) {return;}
 
 ScavTrap::ScavTrap(std::string name) : ClapTrap(name) {
+	this->_hitPoint = 100;
+	this->_energyPoint = 50;
+	this->_attackDamage = 20;
 	std::cout << ansi((short[]){BOLD, ITALIC, GREEN}, 3) + "ScavTrap constructor called for " << name << "." << std::endl;
 	return;
 }
 
-ScavTrap::ScavTrap(const ScavTrap &copy) : ClapTrap(copy) {
-	std::cout << ansi((short[]){BOLD, ITALIC, GREEN}, 3) + "ScavTrap copy constructor called" << std::endl;
+ScavTrap::ScavTrap(const ScavTrap &copy) : ClapTrap(copy.getName()) {
+	this->_hitPoint = copy.getHitPoint();
+	this->_energyPoint = copy.getEnergyPoint();
+	this->_attackDamage = copy.getAttackDamage();
+	std::cout << ansi((short[]){BOLD, ITALIC, GREEN}, 3) + "ScavTrap copy constructor called." << std::endl;
 	return;
 }
 
@@ -21,9 +27,23 @@ ScavTrap::ScavTrap(const ScavTrap &copy) : ClapTrap(copy) {
 /********************************************************************************/
 
 ScavTrap::~ScavTrap() {
-	std::cout << ansi((short[]){BOLD, ITALIC, RED}, 3) + "ScavTrap destructor called" << std::endl;
+	std::cout << ansi((short[]){BOLD, ITALIC, RED}, 3) + "ScavTrap destructor called for " << this->_name << "." << std::endl;
 	return;
 }
+
+/********************************************************************************/
+/* --------------------------------- OVERLOAD --------------------------------- */
+/********************************************************************************/
+
+ScavTrap	&ScavTrap::operator=(const ScavTrap &rhs) {
+	if (this != &rhs)
+		ClapTrap::operator=(rhs);
+	return *this;
+}
+
+/********************************************************************************/
+/* --------------------------------- METHODS ---------------------------------- */
+/********************************************************************************/
 
 void	ScavTrap::attack(const std::string &target) {
 	if (!this->_hitPoint) {
@@ -41,20 +61,6 @@ void	ScavTrap::attack(const std::string &target) {
 	}
 	return;
 }
-
-/********************************************************************************/
-/* --------------------------------- OVERLOAD --------------------------------- */
-/********************************************************************************/
-
-ScavTrap	&ScavTrap::operator=(const ScavTrap &rhs) {
-	if (this != &rhs)
-		ClapTrap::operator=(rhs);
-	return *this;
-}
-
-/********************************************************************************/
-/* --------------------------------- METHODS ---------------------------------- */
-/********************************************************************************/
 
 void	ScavTrap::guardGate(void) {
 	std::cout << "ScavTrap ";

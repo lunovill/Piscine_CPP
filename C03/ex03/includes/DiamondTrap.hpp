@@ -5,7 +5,9 @@
 # include "FragTrap.hpp"
 
 class DiamondTrap : public ScavTrap, public FragTrap {
+
 	private:
+
 		std::string	_name;
 
 		DiamondTrap(void);
@@ -13,11 +15,14 @@ class DiamondTrap : public ScavTrap, public FragTrap {
 	public:
 
 		DiamondTrap(std::string name);
+		DiamondTrap(const DiamondTrap &copy);
 		~DiamondTrap();
 
-		DiamondTrap	&operator=(const FragTrap &rhs);
+		DiamondTrap	&operator=(const DiamondTrap &rhs);
 
-		void whoAmI();
+		void whoAmI(void);
+
+		std::string	getName(void) const;
 };
 
 #endif

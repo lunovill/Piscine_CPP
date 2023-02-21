@@ -4,6 +4,7 @@
 # include "ClapTrap.hpp"
 
 class FragTrap : public ClapTrap {
+
 	private:
 
 		FragTrap(void);

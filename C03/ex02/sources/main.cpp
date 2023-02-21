@@ -116,7 +116,7 @@ int    main(void) {
 		std::cout << ansi((short[]){BOLD}, 1) + std::string(SIZE + SIZE / 2 - 4, '=') + "COMMENTS" + std::string(SIZE + SIZE / 2 - 4, '=') << std::endl;
 		int amount = clash(robotXV, robotXK);
 		if (!robotXV.getHitPoint())
-			std::cout << ansi(NULL, 0) + robotXV.getName() << ansi((short[]){BOLD, BLUE}, 2) +  " is K.O" << std::endl;
+			std::cout << ansi(NULL, 0) + robotXV.getName() << ansi((short[]){BOLD, RED}, 2) +  " is K.O" << std::endl;
 		else
 			std::cout << std::endl;
 		printClash(robotXV, robotXK, i);
