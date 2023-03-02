@@ -10,6 +10,7 @@
 static bool	randomNumber(void) {
 	srand(time(NULL));
 	int random = rand() % 100;
+	std::cout << random << std::endl;	
 	if (random < 1)
 		return true;
 	else
