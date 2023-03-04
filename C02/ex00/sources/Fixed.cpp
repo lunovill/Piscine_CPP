@@ -6,7 +6,7 @@ Fixed::Fixed(void) : _rawBits(0) {
 	std::cout << ansi((short[]){BOLD, GREEN}, 2) << "Default constructor called" << std::endl;
 }
 
-Fixed::Fixed(const Fixed &copy) : _rawBits(copy.rawBits) {
+Fixed::Fixed(const Fixed &copy) : _rawBits(copy._rawBits) {
 	std::cout << ansi((short[]){BOLD, GREEN}, 2) << "Copy constructor called" << std::endl;
 	return;
 }

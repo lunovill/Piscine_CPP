@@ -11,6 +11,8 @@ SRCS_FLS = Animal\
 			Cat\
 			Dog\
 			main\
+			WrongAnimal\
+			WrongCat\
 
 SRCS_DIR = sources
 SRCS = $(addsuffix .cpp, $(SRCS_FLS))

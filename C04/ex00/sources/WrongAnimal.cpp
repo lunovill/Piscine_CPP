@@ -1,17 +1,21 @@
-#include "Brain.hpp"
+#include "WrongAnimal.hpp"
 
 /********************************************************************************/
 /* ------------------------------- CONSTRUCTOR -------------------------------- */
 /********************************************************************************/
 
-Brain::Brain(void) {
+WrongAnimal::WrongAnimal(void) {
 	std::cout << ansi((short[]){BOLD, GREEN}, 2) + "Default constructor called for " + __func__ + "." << std::endl;
 	return ;
 }
 
-Brain::Brain(Brain &copy) {
-	std::cout << ansi((short[]){BOLD, GREEN}, 2) + "Copy constructor called for " + __func__ + "." << std::endl;
-	*this = copy;
+WrongAnimal::WrongAnimal(std::string type) : _type(type) {
+	std::cout << ansi((short[]){BOLD, GREEN}, 2) + "Constructor called for " + __func__ + " of type " + type + "." << std::endl;
+	return ;
+}
+
+WrongAnimal::WrongAnimal(WrongAnimal &copy) : _type(copy.getType()) {
+	std::cout << ansi((short[]){BOLD, GREEN}, 2) + "Copy constructor called for " + __func__ + " of type " + this->_type + "." << std::endl;
 	return ;
 }
 
@@ -19,29 +23,34 @@ Brain::Brain(Brain &copy) {
 /* -------------------------------- DESTRUCTOR -------------------------------- */
 /********************************************************************************/
 
-Brain::~Brain(void) {
+WrongAnimal::~WrongAnimal(void) {
 	std::cout << ansi((short[]){BOLD, RED}, 2) + "Default constructor called for " + __func__ + "." << std::endl;
 	return ;
 }
+
 /********************************************************************************/
 /* --------------------------------- OVERLOAD --------------------------------- */
 /********************************************************************************/
 
-# include <cstdlib>
-
-Brain	&Brain::operator=(const Brain &rhs) {
+WrongAnimal	&WrongAnimal::operator=(const WrongAnimal &rhs) {
 	if (this != &rhs)
-		for (int i = 0; i < 100; i++)
-			this->_ideas[i] = rhs.getIdea(i);
+		this->_type = rhs.getType();
 	return *this;
+}
+
+/********************************************************************************/
+/* --------------------------------- METHODS ---------------------------------- */
+/********************************************************************************/
+
+void	WrongAnimal::makeSound(void) const {
+	std::cout << ansi((short[]){HIGHLIGHT, ITALIC}, 2) + "* No sound *";
+	return ;
 }
 
 /********************************************************************************/
 /* --------------------------------- ACCESSOR --------------------------------- */
 /********************************************************************************/
 
-std::string	Brain::getIdea(int i) const { return this->_ideas[i]; }
-
-void		Brain::setIdea(int i, std::string idea) { this->_ideas[i] = idea; }
+std::string	WrongAnimal::getType(void) const { return ansi((short[]){BOLD, ITALIC}, 2) + this->_type; }
 
 /********************************************************************************/
