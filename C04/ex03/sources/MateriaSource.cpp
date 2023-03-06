@@ -53,8 +53,9 @@ void		MateriaSource::learnMateria(AMateria *m) {
 		for (int i = 0; i < BACKUP_MAX; i++)
 			if (!this->_backup[i]) {
 				this->_backup[i] = m;
-				break;
+				return;
 			}
+	delete m;
 	return;
 }
 

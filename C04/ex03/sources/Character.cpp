@@ -55,8 +55,9 @@ void	Character::equip(AMateria *m) {
 		for (int i = 0; i < INVENTORY_MAX; i++)
 			if (!this->_inventory[i]) {
 				this->_inventory[i] = m;
-				break;
+				return;
 			}
+	delete m;
 	return;
 }
 
