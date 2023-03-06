@@ -11,7 +11,7 @@ Dog::Dog(void) : AAnimal("Dog") {
 	return ;
 }
 
-Dog::Dog(Dog &copy) : AAnimal(copy),_brain(copy.getBrain()) {
+Dog::Dog(const Dog &copy) : AAnimal(copy),_brain(copy.getBrain()) {
 	std::cout << ansi((short[]){BOLD, GREEN}, 2) + "Copy constructor called for " + __func__ + " of type " + this->_type + "." << std::endl;
 	this->_brain = new Brain(*copy.getBrain());
 	return ;
@@ -33,7 +33,7 @@ Dog::~Dog(void) {
 
 Dog	&Dog::operator=(const Dog &rhs) {
 	if (this != &rhs) {
-		Animal::operator=(rhs);
+		AAnimal::operator=(rhs);
 		this->_brain = rhs.getBrain();
 	}
 	return *this;

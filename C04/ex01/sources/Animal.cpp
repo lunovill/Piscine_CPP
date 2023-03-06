@@ -14,7 +14,7 @@ Animal::Animal(std::string type) : _type(type) {
 	return ;
 }
 
-Animal::Animal(Animal &copy) : _type(copy.getType()) {
+Animal::Animal(const Animal &copy) : _type(copy.getType()) {
 	std::cout << ansi((short[]){BOLD, GREEN}, 2) + "Copy constructor called for " + __func__ + " of type " + this->_type + "." << std::endl;
 	return ;
 }

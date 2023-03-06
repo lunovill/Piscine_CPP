@@ -14,7 +14,7 @@ class	AAnimal {
 
 		AAnimal(void);
 		AAnimal(std::string type);
-		AAnimal(AAnimal &copy);
+		AAnimal(const AAnimal &copy);
 		virtual ~AAnimal(void);
 
 		AAnimal	&operator=(const AAnimal &rhs);

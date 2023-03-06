@@ -8,7 +8,7 @@ class	WrongCat : public WrongAnimal {
 	public:
 
 		WrongCat(void);
-		WrongCat(WrongCat &copy);
+		WrongCat(const WrongCat &copy);
 		~WrongCat(void);
 
 		WrongCat	&operator=(const WrongCat &rhs);

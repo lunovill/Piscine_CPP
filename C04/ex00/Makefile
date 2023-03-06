@@ -33,7 +33,7 @@ UTLS_DEP = $(UTLS:%.cpp=$(OBJS_DIR)/%.d)
  #=============================================================================#
 
 CC = c++
-CFLAGS = -Wall -Wextra -Werror -std=c++98 -g
+CFLAGS = -Wall -Wextra -Werror -std=c++98
 CIFLAGS = -Iincludes
 CDFLAGS = -MMD -MP
 

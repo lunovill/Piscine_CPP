@@ -9,7 +9,7 @@ Cat::Cat(void) : Animal("Cat") {
 	return ;
 }
 
-Cat::Cat(Cat &copy) : Animal(copy) {
+Cat::Cat(const Cat &copy) : Animal(copy) {
 	std::cout << ansi((short[]){BOLD, GREEN}, 2) + "Copy constructor called for " + __func__ + " of type " + this->_type + "." << std::endl;
 	return ;
 }

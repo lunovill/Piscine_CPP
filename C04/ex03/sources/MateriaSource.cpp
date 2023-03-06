@@ -1,35 +1,45 @@
-#include "WrongCat.hpp"
+#include "MateriaSource.hpp"
 
 /********************************************************************************/
 /* ------------------------------- CONSTRUCTOR -------------------------------- */
 /********************************************************************************/
 
-WrongCat::WrongCat(void) : WrongAnimal("WrongCat") {
-	std::cout << ansi((short[]){BOLD, GREEN}, 2) + "Default constructor called for " + __func__ + " of type " + this->_type + "." << std::endl;
-	return ;
+MateriaSource::MateriaSource(void) {
+	std::cout << ansi((short[]){BOLD, GREEN}, 2) + "Default constructor called for " + __func__ + "." << std::endl;
+	for (int i = 0; i < BACKUP_MAX; i++)
+		this->_backup[i] = NULL;
+	return;
 }
 
-WrongCat::WrongCat(const WrongCat &copy) : WrongAnimal(copy) {
-	std::cout << ansi((short[]){BOLD, GREEN}, 2) + "Copy constructor called for " + __func__ + " of type " + this->_type + "." << std::endl;
-	return ;
+MateriaSource::MateriaSource(const MateriaSource &copy) {
+	std::cout << ansi((short[]){BOLD, GREEN}, 2) + "Copy constructor called for " + __func__ + "." << std::endl;
+	*this = copy;
+	return;
 }
 
 /********************************************************************************/
 /* -------------------------------- DESTRUCTOR -------------------------------- */
 /********************************************************************************/
 
-WrongCat::~WrongCat(void) {
+MateriaSource::~MateriaSource(void) {
 	std::cout << ansi((short[]){BOLD, RED}, 2) + "Default constructor called for " + __func__ + "." << std::endl;
-	return ;
+	for (int i = 0; i < BACKUP_MAX; i++)
+		delete this->_backup[i];
+	return;
 }
 
 /********************************************************************************/
 /* --------------------------------- OVERLOAD --------------------------------- */
 /********************************************************************************/
 
-WrongCat	&WrongCat::operator=(const WrongCat &rhs) {
+MateriaSource	&MateriaSource::operator=(const MateriaSource &rhs) {
 	if (this != &rhs)
-		WrongAnimal::operator=(rhs);
+		for (int i = 0; i < BACKUP_MAX; i++) {
+			if (this->_backup[i])
+				delete _backup[i];
+			if (rhs.getBackupI(i))
+				this->_backup[i] = rhs.getBackupI(i)->clone();
+		}
 	return *this;
 }
 
@@ -37,15 +47,28 @@ WrongCat	&WrongCat::operator=(const WrongCat &rhs) {
 /* --------------------------------- METHODS ---------------------------------- */
 /********************************************************************************/
 
-void	WrongCat::makeSound(void) const {
-	std::cout << ansi((short[]){HIGHLIGHT, ITALIC, BLUE}, 3) + "\"Miaou!\"";
-	return ;
+
+void		MateriaSource::learnMateria(AMateria *m) {
+	if (m)
+		for (int i = 0; i < BACKUP_MAX; i++)
+			if (!this->_backup[i]) {
+				this->_backup[i] = m;
+				break;
+			}
+	return;
+}
+
+AMateria	*MateriaSource::createMateria(const std::string &type) {
+	for (int i = BACKUP_MAX - 1; i >= 0; i--)
+		if (this->_backup[i] && this->_backup[i]->getType() == type)
+			return this->_backup[i]->clone();
+	return 0;
 }
 
 /********************************************************************************/
 /* --------------------------------- ACCESSOR --------------------------------- */
 /********************************************************************************/
 
-std::string	WrongCat::getType(void) const { return ansi((short[]){BOLD, ITALIC, BLUE}, 3) + this->_type; }
+AMateria	*MateriaSource::getBackupI(const int index) const { return this->_backup[index]; }
 
 /********************************************************************************/

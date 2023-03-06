@@ -55,13 +55,9 @@ int	main(void) {
 	}
 	std::cout << ansi((short[]){BOLD}, 1) + std::string(SIZE, '-') << std::endl;
 
-	for (int i = 0; i < SIZE / 2; i++) {
+	for (int i = 0; i < SIZE / 2; i++)
 		delete zoo[i];
-		zoo[i] = NULL;
-	}
-	for (int i = SIZE / 2; i < SIZE; i++) {
+	for (int i = SIZE / 2; i < SIZE; i++)
 		delete zoo[i];
-		zoo[i] = NULL;
-	}
 	return 0;
 }

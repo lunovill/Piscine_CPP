@@ -7,11 +7,12 @@ UTLS_FLS = ansi\
 UTLS_DIR = utils
 UTLS = $(addsuffix .cpp, $(UTLS_FLS))
 
-SRCS_FLS = Animal\
-			Brain\
-			Cat\
-			Dog\
+SRCS_FLS = AMateria\
+			Character\
+			Cure\
+			Ice\
 			main\
+			MateriaSource\
 
 SRCS_DIR = sources
 SRCS = $(addsuffix .cpp, $(SRCS_FLS))
@@ -32,7 +33,7 @@ UTLS_DEP = $(UTLS:%.cpp=$(OBJS_DIR)/%.d)
  #=============================================================================#
 
 CC = c++
-CFLAGS = -Wall -Wextra -Werror -std=c++98
+CFLAGS = -Wall -Wextra -Werror -std=c++98 -g3
 CIFLAGS = -Iincludes
 CDFLAGS = -MMD -MP
 
@@ -40,7 +41,7 @@ CDFLAGS = -MMD -MP
 #									MAKEFILE									#
  #=============================================================================#
 
-NAME = Brain
+NAME = Character
 
 all : $(NAME)
 

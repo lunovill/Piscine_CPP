@@ -1,15 +1,20 @@
-#include "WrongCat.hpp"
+#include "AAnimal.hpp"
 
 /********************************************************************************/
 /* ------------------------------- CONSTRUCTOR -------------------------------- */
 /********************************************************************************/
 
-WrongCat::WrongCat(void) : WrongAnimal("WrongCat") {
-	std::cout << ansi((short[]){BOLD, GREEN}, 2) + "Default constructor called for " + __func__ + " of type " + this->_type + "." << std::endl;
+AAnimal::AAnimal(void) {
+	std::cout << ansi((short[]){BOLD, GREEN}, 2) + "Default constructor called for " + __func__ + "." << std::endl;
 	return ;
 }
 
-WrongCat::WrongCat(const WrongCat &copy) : WrongAnimal(copy) {
+AAnimal::AAnimal(std::string type) : _type(type) {
+	std::cout << ansi((short[]){BOLD, GREEN}, 2) + "Constructor called for " + __func__ + " of type " + type + "." << std::endl;
+	return ;
+}
+
+AAnimal::AAnimal(const AAnimal &copy) : _type(copy.getType()) {
 	std::cout << ansi((short[]){BOLD, GREEN}, 2) + "Copy constructor called for " + __func__ + " of type " + this->_type + "." << std::endl;
 	return ;
 }
@@ -18,7 +23,7 @@ WrongCat::WrongCat(const WrongCat &copy) : WrongAnimal(copy) {
 /* -------------------------------- DESTRUCTOR -------------------------------- */
 /********************************************************************************/
 
-WrongCat::~WrongCat(void) {
+AAnimal::~AAnimal(void) {
 	std::cout << ansi((short[]){BOLD, RED}, 2) + "Default constructor called for " + __func__ + "." << std::endl;
 	return ;
 }
@@ -27,25 +32,16 @@ WrongCat::~WrongCat(void) {
 /* --------------------------------- OVERLOAD --------------------------------- */
 /********************************************************************************/
 
-WrongCat	&WrongCat::operator=(const WrongCat &rhs) {
+AAnimal	&AAnimal::operator=(const AAnimal &rhs) {
 	if (this != &rhs)
-		WrongAnimal::operator=(rhs);
+		this->_type = rhs.getType();
 	return *this;
-}
-
-/********************************************************************************/
-/* --------------------------------- METHODS ---------------------------------- */
-/********************************************************************************/
-
-void	WrongCat::makeSound(void) const {
-	std::cout << ansi((short[]){HIGHLIGHT, ITALIC, BLUE}, 3) + "\"Miaou!\"";
-	return ;
 }
 
 /********************************************************************************/
 /* --------------------------------- ACCESSOR --------------------------------- */
 /********************************************************************************/
 
-std::string	WrongCat::getType(void) const { return ansi((short[]){BOLD, ITALIC, BLUE}, 3) + this->_type; }
+std::string	AAnimal::getType(void) const { return ansi((short[]){BOLD, ITALIC}, 2) + this->_type; }
 
 /********************************************************************************/

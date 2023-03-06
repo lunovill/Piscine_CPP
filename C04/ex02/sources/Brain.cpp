@@ -9,7 +9,7 @@ Brain::Brain(void) {
 	return ;
 }
 
-Brain::Brain(Brain &copy) {
+Brain::Brain(const Brain &copy) {
 	std::cout << ansi((short[]){BOLD, GREEN}, 2) + "Copy constructor called for " + __func__ + "." << std::endl;
 	*this = copy;
 	return ;

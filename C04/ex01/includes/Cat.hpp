@@ -15,7 +15,7 @@ class	Cat : public Animal {
 	public:
 
 		Cat(void);
-		Cat(Cat &copy);
+		Cat(const Cat &copy);
 		virtual ~Cat(void);
 
 		Cat	&operator=(const Cat &rhs);

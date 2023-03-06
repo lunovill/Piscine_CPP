@@ -14,7 +14,7 @@ class	WrongAnimal {
 
 		WrongAnimal(void);
 		WrongAnimal(std::string type);
-		WrongAnimal(WrongAnimal &copy);
+		WrongAnimal(const WrongAnimal &copy);
 		~WrongAnimal(void);
 
 		WrongAnimal	&operator=(const WrongAnimal &rhs);

@@ -13,7 +13,7 @@ class	Brain {
 	public:
 
 		Brain(void);
-		Brain(Brain &copy);
+		Brain(const Brain &copy);
 		~Brain(void);
 
 		Brain	&operator=(const Brain &rhs);

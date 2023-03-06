@@ -1,51 +1,44 @@
-#include "WrongCat.hpp"
+#include "Cure.hpp"
 
 /********************************************************************************/
 /* ------------------------------- CONSTRUCTOR -------------------------------- */
 /********************************************************************************/
 
-WrongCat::WrongCat(void) : WrongAnimal("WrongCat") {
-	std::cout << ansi((short[]){BOLD, GREEN}, 2) + "Default constructor called for " + __func__ + " of type " + this->_type + "." << std::endl;
-	return ;
+Cure::Cure(void) : AMateria("cure") {
+	std::cout << ansi((short[]){BOLD, GREEN}, 2) + "Default constructor called for " + __func__ + "." << std::endl;
+	return;
 }
 
-WrongCat::WrongCat(const WrongCat &copy) : WrongAnimal(copy) {
-	std::cout << ansi((short[]){BOLD, GREEN}, 2) + "Copy constructor called for " + __func__ + " of type " + this->_type + "." << std::endl;
-	return ;
+Cure::Cure(const Cure &copy) : AMateria(copy) {
+	std::cout << ansi((short[]){BOLD, GREEN}, 2) + "Copy constructor called for " + __func__ + "." << std::endl;
+	return;
 }
+
 
 /********************************************************************************/
 /* -------------------------------- DESTRUCTOR -------------------------------- */
 /********************************************************************************/
 
-WrongCat::~WrongCat(void) {
+Cure::~Cure(void) {
 	std::cout << ansi((short[]){BOLD, RED}, 2) + "Default constructor called for " + __func__ + "." << std::endl;
-	return ;
+	return;
 }
 
 /********************************************************************************/
 /* --------------------------------- OVERLOAD --------------------------------- */
 /********************************************************************************/
 
-WrongCat	&WrongCat::operator=(const WrongCat &rhs) {
-	if (this != &rhs)
-		WrongAnimal::operator=(rhs);
-	return *this;
-}
+Cure	&Cure::operator=(const Cure &) { return *this; }
 
 /********************************************************************************/
 /* --------------------------------- METHODS ---------------------------------- */
 /********************************************************************************/
 
-void	WrongCat::makeSound(void) const {
-	std::cout << ansi((short[]){HIGHLIGHT, ITALIC, BLUE}, 3) + "\"Miaou!\"";
-	return ;
+Cure	*Cure::clone(void) const { return new Cure(*this); }
+
+void	Cure::use(ICharacter& target) {
+	std::cout << ansi(NULL, 0) << "* heals " + target.getName() +  "'s wounds *" << std::endl;
+	return;
 }
-
-/********************************************************************************/
-/* --------------------------------- ACCESSOR --------------------------------- */
-/********************************************************************************/
-
-std::string	WrongCat::getType(void) const { return ansi((short[]){BOLD, ITALIC, BLUE}, 3) + this->_type; }
 
 /********************************************************************************/

@@ -14,7 +14,7 @@ WrongAnimal::WrongAnimal(std::string type) : _type(type) {
 	return ;
 }
 
-WrongAnimal::WrongAnimal(WrongAnimal &copy) : _type(copy.getType()) {
+WrongAnimal::WrongAnimal(const WrongAnimal &copy) : _type(copy.getType()) {
 	std::cout << ansi((short[]){BOLD, GREEN}, 2) + "Copy constructor called for " + __func__ + " of type " + this->_type + "." << std::endl;
 	return ;
 }
