@@ -1,5 +1,5 @@
-#ifndef MyClass_HPP
-# define MyClass_HPP
+#ifndef MYCLASS_HPP
+# define MYCLASS_HPP
 
 # include <iostream>
 # include "ansi.hpp"
@@ -11,10 +11,10 @@ class	MyClass {
 	public:
 
 		MyClass(void);
-		MyClass(MyClass &copy);
+		MyClass(const MyClass &copy);
 		~MyClass(void);
 
-		MyClass	&operator=(MyClass &rhs);
+		MyClass	&operator=(const MyClass &rhs);
 };
 
 #endif

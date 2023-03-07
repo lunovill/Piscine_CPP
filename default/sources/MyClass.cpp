@@ -9,7 +9,7 @@ MyClass::MyClass(void) {
 	return;
 }
 
-MyClass::MyClass(MyClass &copy) {
+MyClass::MyClass(const MyClass &copy) {
 	std::cout << ansi((short[]){BOLD, GREEN}, 2) + "Copy constructor called for " + __func__ + "." << std::endl;
 	return;
 }
@@ -27,7 +27,7 @@ MyClass::~MyClass(void) {
 /* --------------------------------- OVERLOAD --------------------------------- */
 /********************************************************************************/
 
-MyClass	&MyClass::operator=(const Dog &rhs) {
+MyClass	&MyClass::operator=(const Myclass &rhs) {
 	if (this != &rhs)
 		// ...;
 	return *this;
