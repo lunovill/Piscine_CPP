@@ -1,9 +1,9 @@
 #ifndef A_HPP
 # define A_HPP
 
-# include "Base.hpp"
+# include "ABase.hpp"
 
-class	A : public Base {
+class	A : public ABase {
 
 	public:
 

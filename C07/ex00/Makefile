@@ -8,7 +8,6 @@ UTLS_DIR = utils
 UTLS = $(addsuffix .cpp, $(UTLS_FLS))
 
 SRCS_FLS = main\
-			ScalarConverter\
 
 SRCS_DIR = sources
 SRCS = $(addsuffix .cpp, $(SRCS_FLS))
@@ -37,7 +36,7 @@ CDFLAGS = -MMD -MP
 #									MAKEFILE									#
  #=============================================================================#
 
-NAME = ScalarConverter
+NAME = Template
 
 all : $(NAME)
 

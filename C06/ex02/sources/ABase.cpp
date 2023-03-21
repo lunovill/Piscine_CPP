@@ -1,10 +1,10 @@
-#include "Base.hpp"
+#include "ABase.hpp"
 
 /********************************************************************************/
 /* -------------------------------- DESTRUCTOR -------------------------------- */
 /********************************************************************************/
 
-Base::~Base(void) {
+ABase::~ABase(void) {
 	std::cout << ansi((short[]){BOLD, RED}, 2) + "Default constructor called for " + __func__ + "." << std::endl;
 	return;
 }

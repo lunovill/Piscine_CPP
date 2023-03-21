@@ -19,19 +19,3 @@ std::string	ansi(const short set[], short size)
 	ansi << 'm';
 	return ansi.str();
 }
-
-//-------Sous C++17--------
-// template <typename... Strings>
-// std::string ansi(Strings... strings) {
-//     std::ostringstream format;
-
-//     format << "\033[0";
-
-//     // Ajouter les chaînes séparées par des ';'
-//     int dummy[] = {0, ((format << ';' << strings), 0) ...};
-//     (void)dummy; // Pour supprimer l'avertissement "unused variable"
-
-//     format << "m";
-
-//     return format.str();
-// }

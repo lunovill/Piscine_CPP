@@ -4,7 +4,7 @@
 #include "B.hpp"
 #include "C.hpp"
 
-Base    *generate(void) {
+ABase    *generate(void) {
 	int random = rand() % 3;
 	switch (random) {
 		case 0:
@@ -18,7 +18,7 @@ Base    *generate(void) {
 	}
 }
 
-void	identify(Base* p) {
+void	identify(ABase* p) {
 	if (dynamic_cast<A *>(p))
 		std::cout << ansi(NULL, 0) + "The Base ptr identify is " << ansi((short[]){ITALIC, CYAN}, 2) + "A" << std::endl;
 	else if (dynamic_cast<B *>(p))
@@ -28,7 +28,7 @@ void	identify(Base* p) {
 	return;
 }
 
-void identify(Base& p) {
+void identify(ABase& p) {
 	try {
 		p = dynamic_cast<A &>(p);
 		std::cout << ansi(NULL, 0) + "The Base ref identify is " << ansi((short[]){ITALIC, DARK, CYAN}, 3) + "A" << std::endl;
@@ -50,7 +50,7 @@ void identify(Base& p) {
 
 int	main(void) {
 	srand(time(NULL));
-	Base *ptr;
+	ABase *ptr;
 
 	ptr = generate();
 	identify(ptr);
