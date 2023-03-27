@@ -1,29 +1,18 @@
-#include "Array.hpp"
+#include "MutantStack.hpp"
 
 /********************************************************************************/
 /* ------------------------------- CONSTRUCTOR -------------------------------- */
 /********************************************************************************/
 
 template<typename T>
-Array<T>::Array(void) : _size(0), _array(NULL) {
+MutantStack<T>::MutantStack(void) : std::stack<T>() {
 	std::cout << ansi((short[]){BOLD, GREEN}, 2) + "Default constructor called for " + __func__ + "." << std::endl;
 	return;
 }
 
 template<typename T>
-Array<T>::Array(const unsigned int &n) : _size(n) {
-	std::cout << ansi((short[]){BOLD, GREEN}, 2) + "Constructor called for " + __func__ + "." << std::endl;
-	_array = new T[this->_size];
-	for (unsigned int i = 0; i < this->_size; i++)
-		this->_array[i] = T();
-	return;
-}
-
-template<typename T>
-Array<T>::Array(const Array<T> &copy) : _size(copy._size) {
+MutantStack<T>::MutantStack(const MutantStack &copy) : std::stack<T>(copy) {
 	std::cout << ansi((short[]){BOLD, GREEN}, 2) + "Copy constructor called for " + __func__ + "." << std::endl;
-	this->_array = new T[this->_size];
-	this = copy;
 	return;
 }
 
@@ -32,9 +21,8 @@ Array<T>::Array(const Array<T> &copy) : _size(copy._size) {
 /********************************************************************************/
 
 template<typename T>
-Array<T>::~Array(void) {
+MutantStack<T>::~MutantStack(void) {
 	std::cout << ansi((short[]){BOLD, RED}, 2) + "Default constructor called for " + __func__ + "." << std::endl;
-	delete [] this->_array;
 	return;
 }
 
@@ -43,18 +31,10 @@ Array<T>::~Array(void) {
 /********************************************************************************/
 
 template<typename T>
-Array<T>	&Array<T>::operator=(const Array<T> &rhs) {
+MutantStack<T>	&MutantStack<T>::operator=(const MutantStack<T> &rhs) {
 	if (this != &rhs)
-		for (unsigned int i = 0; i < this->_size; i++)
-			this->_array[i] = rhs._array[i];
+		this->c = rhs.c;
 	return *this;
-}
-
-template<typename T>
-T	&Array<T>::operator[](const unsigned int index){
-	if (this->_size <= index)
-		throw InvalidIndex();
-	return this->_array[index];
 }
 
 /********************************************************************************/
@@ -62,16 +42,24 @@ T	&Array<T>::operator[](const unsigned int index){
 /********************************************************************************/
 
 template<typename T>
-const char		*Array<T>::InvalidIndex::what(void) const throw() { return "\033[0;2;3mInvalid index"; }
+typename MutantStack<T>::iterator			MutantStack<T>::begin() { return this->c.begin(); }
 
 template<typename T>
-unsigned int	Array<T>::size(void) const { return this->_size;}
+typename MutantStack<T>::iterator			MutantStack<T>::end() { return this->c.end(); }
+
+template<typename T>
+typename MutantStack<T>::reverse_iterator	MutantStack<T>::rbegin() { return this->c.rbegin(); }
+
+template<typename T>
+typename MutantStack<T>::reverse_iterator	MutantStack<T>::rend(){ return this->c.rend(); }
 
 /********************************************************************************/
 
 template<typename T>
-std::ostream	&operator<<(std::ostream &o, Array<T> &tab) {
-	for (unsigned int i = 0; i < tab.size(); i++)
-		o << ansi(NULL, 0) << "case " << i << ": " << tab[i] << std::endl;
+std::ostream	&operator<<(std::ostream &o, MutantStack<T> &rhs) {
+	o << "[";
+	for (typename MutantStack<T>::iterator it = rhs.begin(); it != rhs.end(); it++)
+		o << *it << ", ";
+	o << "\033[2D]";
 	return o;
 }

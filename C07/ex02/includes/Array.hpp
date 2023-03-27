@@ -20,6 +20,7 @@ class	Array {
 		~Array<T>(void);
 
 		Array<T>	&operator=(const Array<T> &rhs);
+		T			&operator[](const unsigned int index);
 
 		class	InvalidIndex : public std::exception {
 			public:
@@ -27,10 +28,10 @@ class	Array {
 		};
 
 		unsigned int	size(void) const;
-
-		T				getArray(const unsigned int index) const;
-		void			setArray(const unsigned int index, T cell);
 };
+
+template<typename T>
+std::ostream	&operator<<(std::ostream &o, Array<T> &tab);
 
 #include "Array.tpp"
 
