@@ -21,7 +21,7 @@ int main(void) {
 
 	std::cout << ansi(NULL, 0) <<"J'utilie reverse_iterator sur copy: ";
 	std::cout << "[";
-	for (MutantStack<int>::reverse_iterator rit = mutant.rbegin(); rit != mutant.rend(); ++rit)
+	for (MutantStack<int>::reverse_iterator rit = copy.rbegin(); rit != copy.rend(); ++rit)
 		std::cout << *rit << ", ";
 	std::cout << "\033[2D]" << std::endl;
 
