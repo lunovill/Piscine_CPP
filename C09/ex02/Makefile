@@ -7,10 +7,8 @@ UTLS_FLS = ansi\
 UTLS_DIR = utils
 UTLS = $(addsuffix .cpp, $(UTLS_FLS))
 
-SRCS_FLS = insert\
+SRCS_FLS = PmergeMe\
 			main\
-			merge\
-			merge_insert\
 
 SRCS_DIR = sources
 SRCS = $(addsuffix .cpp, $(SRCS_FLS))

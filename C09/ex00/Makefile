@@ -7,7 +7,7 @@ UTLS_FLS = ansi\
 UTLS_DIR = utils
 UTLS = $(addsuffix .cpp, $(UTLS_FLS))
 
-SRCS_FLS = btc\
+SRCS_FLS = BitcoinExchange\
 			main\
 
 SRCS_DIR = sources

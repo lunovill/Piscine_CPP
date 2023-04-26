@@ -47,6 +47,7 @@ int	main(int argc, char *argv[]) {
 	}
 	unsigned int	threshold = sequenceDQE.size() / findQ(sequenceDQE.size());
 	std::cout << "Befor:\t" << sequenceDQE << std::endl;
+
 	std::clock_t start = std::clock();
 	merge_insert(sequenceDQE, threshold);
 	std::clock_t end = std::clock();
@@ -54,12 +55,10 @@ int	main(int argc, char *argv[]) {
 	std::cout << "After:\t" << sequenceDQE << std::endl;
 	std::cout << "Time to process a range of " << sequenceDQE.size() << " elements with std::deque : " << elapsed_time << " ms" << std::endl;
 
-	// std::cout << "Befor:\t" << sequenceLST << std::endl;
 	start = std::clock();
 	merge_insert(sequenceLST, threshold);
 	end = std::clock();
 	elapsed_time = static_cast<double>(end - start) / CLOCKS_PER_SEC * 1000.0;
-	// std::cout << "After:\t" << sequenceLST << std::endl;
 	std::cout << "Time to process a range of " << sequenceLST.size() << " elements with std::list : " << elapsed_time << " ms" << std::endl;
 
 	return 0;

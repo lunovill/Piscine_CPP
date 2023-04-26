@@ -1,4 +1,4 @@
-#include "btc.hpp"
+#include "BitcoinExchange.hpp"
 
 static std::map<std::string, float>	creatData(std::ifstream &dataFile) {
 	std::map<std::string, float>	dataMap;

@@ -7,7 +7,8 @@ UTLS_FLS = ansi\
 UTLS_DIR = utils
 UTLS = $(addsuffix .cpp, $(UTLS_FLS))
 
-SRCS_FLS = main\
+SRCS_FLS = RPN\
+			main\
 
 SRCS_DIR = sources
 SRCS = $(addsuffix .cpp, $(SRCS_FLS))
