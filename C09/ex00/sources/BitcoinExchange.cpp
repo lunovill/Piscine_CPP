@@ -6,7 +6,7 @@ static std::map<std::string, float>	creatData(std::ifstream &dataFile) {
 	getline(dataFile, line);
 	while (getline(dataFile, line)) {
 		std::string::size_type	sep = line.find(',');
-		dataMap[line.substr(0, sep)] = stoT<float>(line.substr(sep + 1));
+		dataMap[line.substr(0, sep)] = atof(line.substr(sep + 1).c_str());
 	}
 	return dataMap;
 }
@@ -40,8 +40,8 @@ static bool	isValidDate(std::string const &date) {
 
 static int isValidValue(const std::string &str) {
     if (str.empty()) { return 1; }
-
     size_t i = 0;
+	if (str[0] == '-') { i++; }
     bool hasDecimalPoint = false;
     if (str[0] == '.' && str.length() == 1)	{ return 1; }
     for (; i < str.size(); ++i) {
@@ -53,12 +53,13 @@ static int isValidValue(const std::string &str) {
         }
     }
 
-	float value = stoT<float>(str);
+	float value = atof(str.c_str());
 
     if (value >= float(std::numeric_limits<int>::max()) || value <= float(std::numeric_limits<int>::min())) { return 2; }
     if (value < 0) { return 3; }
     return 0;
 }
+
 std::map<std::string, float>::iterator	earliestDate(std::map<std::string, float> &data, std::string const &date) {
 	int year = atoi(date.substr(0, 4).c_str());
 	int month = atoi(date.substr(5, 2).c_str());
@@ -99,7 +100,7 @@ void	btc(std::ifstream &dataFile, std::ifstream &input) {
 			std::cerr << ansi((short[]){UNDERLINE, DARK}, 2) + "Error: btc():" + ansi((short[]){DARK, ITALIC}, 2) + " not a positive number." << std::endl;
 		} else {
 			std::string	date = line.substr(0, index);
-			float		value = stoT<float>(line.substr(index + 3));
+			float		value = atof(line.substr(index + 3).c_str());
 			std::map<std::string, float>::iterator	it = earliestDate(data, date);
 			std::cout << ansi(NULL, 0) << date << " => " << value << " = " << value * it->second << std::endl;
 		}
